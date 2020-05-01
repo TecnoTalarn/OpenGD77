@@ -120,7 +120,7 @@ static void triggerQSOdataDisplay(void);
 enum RXSyncClass { SYNC_CLASS_HEADER = 0, SYNC_CLASS_VOICE = 1, SYNC_CLASS_DATA = 2, SYNC_CLASS_RC = 3};
 
 static const int START_TICK_TIMEOUT = 20;
-static const int END_TICK_TIMEOUT 	= 13;
+static const int END_TICK_TIMEOUT 	= 14; //modificat de 13 a 14 per provar problema reververacio
 
 static volatile int lastRxColorCode=0;
 static bool ccHold=true;
