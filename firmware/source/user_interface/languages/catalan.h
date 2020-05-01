@@ -36,7 +36,7 @@ const stringsTable_t catalanLanguage=
 {
 .LANGUAGE_NAME			= "Català",
 .language				= "Idioma",
-.menu					= "Men�",
+.menu					= "Menú",
 .credits				= "Crèdits",
 .zone					= "Zona",
 .rssi					= "Senyal",
