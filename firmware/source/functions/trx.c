@@ -23,7 +23,7 @@
 #include <trx.h>
 #include <user_interface/menuSystem.h>
 
-
+int trx_ctcc_measure_count=0;
 int trx_measure_count = 0;
 volatile bool trxIsTransmitting = false;
 uint32_t trxTalkGroupOrPcId = 9;// Set to local TG just in case there is some problem with it not being loaded
@@ -379,11 +379,30 @@ void trxCheckAnalogSquelch(void)
 		}
 		else
 		{
+		//  start riku mod
 
 			if (trxIsTransmittingTone == false)
 			{
-				disableAudioAmp(AUDIO_AMP_MODE_RF);
+				trx_ctcc_measure_count++;
+				if (trx_ctcc_measure_count==100){	// add squelch close delay when using ctcss to avoid breaking ups on high deviation
+					disableAudioAmp(AUDIO_AMP_MODE_RF);
+					trx_ctcc_measure_count=0;
+				}
+				if (!rxCTCSSactive){			// when not using rx ctcss will close faster squelch
+					disableAudioAmp(AUDIO_AMP_MODE_RF);
+					trx_ctcc_measure_count=0;
+				}
+				if(trxRxNoise > squelch){		// last resort squelch closing, when there no signal. this fixes above squelch tail when use ctcss
+					disableAudioAmp(AUDIO_AMP_MODE_RF);
+					trx_ctcc_measure_count=0;
+				}
 			}
+			// end riku mod
+
+			/*if (trxIsTransmittingTone == false)
+			{
+				disableAudioAmp(AUDIO_AMP_MODE_RF);
+			}*/
 		}
 
     	trx_measure_count=0;
